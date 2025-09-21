@@ -36,6 +36,21 @@ CREATE OR REPLACE WAREHOUSE demo_build_wh
 
 
 /*--
+privilege grants
+--*/
+
+
+-- Grant privileges to the SYSADMIN role to allow for object creation and data access.
+-- This is necessary because subsequent scripts may be run by a role other than ACCOUNTADMIN.
+GRANT USAGE ON DATABASE {{env}}_tasty_bytes TO ROLE sysadmin;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE {{env}}_tasty_bytes TO ROLE sysadmin;
+GRANT CREATE FUNCTION ON SCHEMA {{env}}_tasty_bytes.analytics TO ROLE sysadmin;
+GRANT CREATE VIEW ON SCHEMA {{env}}_tasty_bytes.harmonized TO ROLE sysadmin;
+GRANT CREATE VIEW ON SCHEMA {{env}}_tasty_bytes.analytics TO ROLE sysadmin;
+GRANT SELECT ON ALL TABLES IN DATABASE {{env}}_tasty_bytes TO ROLE sysadmin;
+GRANT USAGE ON WAREHOUSE demo_build_wh TO ROLE sysadmin;
+
+/*--
 file format and stage creation
 --*/
 
